@@ -1,3 +1,5 @@
+const chessBoard = document.querySelector(".chess-board");
+
 const KnightFactory = (start, end) => {
   const startPoint = start;
   const endPoint = end;
@@ -29,6 +31,8 @@ const gameBoardFactory = () => {
   }
   return gameBoard;
 };
+
+createBoard();
 
 const knightTravails = function (start = [0, 0], end = [3, 3]) {
   const gameBoard = gameBoardFactory();
@@ -66,6 +70,9 @@ const knightTravails = function (start = [0, 0], end = [3, 3]) {
       console.log(parentsMap.get(currentSquare.toString()));
       const path = tracePath(currentSquare);
       // console.log({ path });
+      console.log({ path });
+
+      drawPath(path);
       return path;
     }
     for (const move of knight.moves) {
@@ -95,7 +102,37 @@ const knightTravails = function (start = [0, 0], end = [3, 3]) {
   return "NO PATH FOUND";
 };
 
-knightTravails([0, 0], [6, 7]);
+function createBoard() {
+  for (let i = 7; i >= 0; i--) {
+    for (let j = 0; j < 8; j++) {
+      const square = document.createElement("div");
+      square.classList.add((i + j) % 2 === 0 ? "square-black" : "square-white");
+      square.id = `${i},${j}`;
+      chessBoard.appendChild(square);
+    }
+  }
+}
+
+function drawPath(path) {
+  path.forEach((coord, i) => {
+    const curSquare = document.getElementById(`${coord[0]},${coord[1]}`);
+
+    setTimeout(() => {
+      curSquare.classList.add("marked");
+    }, i * 500);
+
+    if (i !== 0) {
+      const prevSquare = document.getElementById(
+        `${path[i - 1][0]},${path[i - 1][1]}`
+      );
+      setTimeout(() => {
+        prevSquare.classList.remove("marked");
+      }, i * 500);
+    }
+  });
+}
+
+knightTravails([0, 0], [7, 1]);
 
 // console.log(knightMoves([0, 0], [1, 2])); // should output [[0,0],[1,2]]
 // console.log(knightMoves([0, 0], [3, 3])); // should output [[0,0],[1,2],[3,3]]

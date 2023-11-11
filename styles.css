@@ -1,0 +1,32 @@
+body {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background-color: rgb(45, 44, 44);
+}
+
+.chess-board {
+  height: 50rem;
+  width: 50rem;
+  border: groove 20px burlywood;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+}
+
+.square-black {
+  background-color: black;
+}
+
+.square-white {
+  background-color: white;
+}
+
+.square-black,
+.square-white {
+  transition: 700ms;
+}
+
+.marked {
+  background-color: rgb(230, 62, 157);
+}
